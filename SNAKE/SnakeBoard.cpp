@@ -2,54 +2,72 @@
 #include "SnakeBoard.h"
 
 
-SnakeBoard::SnakeBoard(int h, int w) : height(h), width(w)
+SnakeBoard::SnakeBoard(int h, int w)
 {
-	background.setSize(sf::Vector2f(height, width));
-	background.setFillColor(sf::Color(253, 246, 111));
-
-	square.setSize(sf::Vector2f(width/40, width/40)); //40 - amount of squares
-	square.setFillColor(sf::Color(146, 69, 42));
-	square.setOutlineThickness(3);
-	square.setOutlineColor(sf::Color::White);
-}
-
-int SnakeBoard::getBoardHeight()
-{
-	return height;
-}
-
-int SnakeBoard::getBoardWidth()
-{
-	return width;
-}
-
-void SnakeBoard::draw(sf::RenderWindow & w)
-{
-	w.draw(background);
-	for (int i = 0; i < 40; ++i)
+	winHeight = h;
+	winWidth = w;
+	height = 100;
+	width = 100;
+	for (int i = 0; i < 100; ++i)
 	{
-		if (i <= 1 || i >= 40 - 2)
+		for (int k = 0; k < 100; ++k)
 		{
-			for (int j = 0; j < 40; ++j)
-			{
-				square.setPosition(j*width / 40, i*width / 40);
-				w.draw(square);
-			}
+			board[i][k].hasFeed = false;
+			board[i][k].hasSnake = false;
+			board[i][k].hasWall = false;
 		}
-		else
-		{
-			for (int j = 0; j < 2; ++j)
-			{
-				square.setPosition(j*width / 40, i*width / 40);
-				w.draw(square);
-			}
-			for (int k = 40 - 2; k < 40; ++k)
-			{
-				square.setPosition(k*width / 40, i*width / 40);
-				w.draw(square);
-			}
-		}
-		
 	}
+	for (int j = 0; j < 100; ++j)
+	{
+		board[j][0].hasWall = true;
+		board[j][99].hasWall = true;
+		board[0][j].hasWall = true;
+		board[99][j].hasWall = true;
+	}
+	board[49][49].hasSnake = true;
+
 }
+
+void SnakeBoard::setFeed()
+{
+	int x = 0;
+	int y = 0;
+	do
+	{
+		x = rand() % height;
+		y = rand() % width;
+	} while (board[x][y].hasSnake == true || board[x][y].hasWall == true);
+	board[x][y].hasFeed = true;
+}
+
+
+GameState SnakeBoard::getGameState() const
+{
+	return GameState();
+}
+
+int SnakeBoard::getSnakeLength() const
+{
+	return 0;
+}
+
+void SnakeBoard::move(direction dir)
+{
+}
+
+bool SnakeBoard::isFeedEaten() const
+{
+	return false;
+}
+
+void SnakeBoard::lengthenSnake()
+{
+}
+
+char SnakeBoard::getFieldInfo(int x, int y) const
+{
+	return 0;
+}
+
+
 

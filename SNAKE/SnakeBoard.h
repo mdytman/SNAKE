@@ -1,15 +1,38 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <vector>
+
+enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
+enum direction {RIGHT, LEFT, UP, DOWN};
+
+struct Field
+{
+	bool hasFeed;
+	bool hasWall;
+	bool hasSnake; //?
+};
+
 class SnakeBoard
 {
+	Field board[100][100];
+	int winHeight;
+	int winWidth;
 	int height;
 	int width;
-	sf::RectangleShape square;
-	sf::RectangleShape background;
+	GameState state;
+	std::vector <int> snakeLength;
 public:
 	SnakeBoard(int h, int w);
-	int getBoardHeight();
-	int getBoardWidth();
-	void draw(sf::RenderWindow &w);
+	void setFeed();
+	int getBoardHeight() const { return winHeight; }
+	int getBoardWidth() const { return winWidth; }
+	int getHeight() const { return height; }
+	int getWidth() const { return width; }
+	GameState getGameState() const;
+	int getSnakeLength() const;
+	void move(direction dir);
+	bool isFeedEaten() const;
+	void lengthenSnake();
+	char getFieldInfo(int x, int y) const;
 };
 
