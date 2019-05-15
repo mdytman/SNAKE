@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "SnakeBoard.h"
+#include "IntroView.h"
 
 
 
@@ -11,8 +12,15 @@
 int main()
 {
 	SnakeBoard sb(900, 900);
+	IntroView iv(sb);
 
-	sf::RenderWindow w{ sf::VideoMode{sb.getBoardWidth(), sb.getBoardHeight()}, "SNAKE" };
+	unsigned int width;
+	unsigned int height;
+
+	width = (unsigned)sb.getBoardWidth();
+	height = (unsigned)sb.getBoardHeight();
+
+	sf::RenderWindow w{ sf::VideoMode{width, height}, "SNAKE" };
 
 	w.setFramerateLimit(60);
 	sf::Event event;
@@ -28,7 +36,8 @@ int main()
 		}
 
 		w.clear();
-		sb.draw(w);
+		//sb.draw(w);
+		iv.draw(w);
 
 		w.display();
 	}

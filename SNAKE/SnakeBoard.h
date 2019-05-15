@@ -8,8 +8,8 @@ class SnakeBoard
 	sf::RectangleShape background;
 public:
 	SnakeBoard(int h, int w);
-	unsigned int getBoardHeight();
-	unsigned int getBoardWidth();
+	int getBoardHeight();
+	int getBoardWidth();
 	void draw(sf::RenderWindow &w);
 };
 

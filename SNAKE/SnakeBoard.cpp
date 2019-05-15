@@ -13,12 +13,12 @@ SnakeBoard::SnakeBoard(int h, int w) : height(h), width(w)
 	square.setOutlineColor(sf::Color::White);
 }
 
-unsigned int SnakeBoard::getBoardHeight()
+int SnakeBoard::getBoardHeight()
 {
 	return height;
 }
 
-unsigned int SnakeBoard::getBoardWidth()
+int SnakeBoard::getBoardWidth()
 {
 	return width;
 }
