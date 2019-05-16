@@ -8,8 +8,9 @@ enum direction {RIGHT, LEFT, UP, DOWN};
 struct Field
 {
 	bool hasFeed;
-	bool hasWall;
+	bool isWall;
 	bool hasSnake; //?
+	bool hasSnakeHead;
 };
 
 class SnakeBoard
@@ -23,11 +24,16 @@ class SnakeBoard
 	std::vector <int> snakeLength;
 public:
 	SnakeBoard(int h, int w);
+	void debug_display() const;
 	void setFeed();
 	int getBoardHeight() const { return winHeight; }
 	int getBoardWidth() const { return winWidth; }
 	int getHeight() const { return height; }
 	int getWidth() const { return width; }
+	bool hasSnake(int x, int y) const;
+	bool isWall(int x, int y) const;
+	bool hasSnakeHead(int x, int y) const;
+	bool hasFeed(int x, int y) const;
 	GameState getGameState() const;
 	int getSnakeLength() const;
 	void move(direction dir);

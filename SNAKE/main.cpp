@@ -13,6 +13,7 @@ int main()
 {
 	SnakeBoard sb(900, 900);
 	IntroView iv(sb);
+	sb.debug_display();
 
 	unsigned int width;
 	unsigned int height;
