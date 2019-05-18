@@ -3,7 +3,7 @@
 #include <vector>
 
 enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
-enum direction {RIGHT, LEFT, UP, DOWN};
+enum Direction {RIGHT, LEFT, UP, DOWN};
 
 struct Field
 {
@@ -11,6 +11,12 @@ struct Field
 	bool isWall;
 	bool hasSnake; //?
 	bool hasSnakeHead;
+};
+
+struct snakePosition
+{
+	int x;
+	int y;
 };
 
 class SnakeBoard
@@ -21,7 +27,8 @@ class SnakeBoard
 	int height;
 	int width;
 	GameState state;
-	std::vector <int> snakeLength;
+	Direction direction;
+	std::vector <snakePosition> snakePos;
 public:
 	SnakeBoard(int h, int w);
 	void debug_display() const;
@@ -36,7 +43,7 @@ public:
 	bool hasFeed(int x, int y) const;
 	GameState getGameState() const;
 	int getSnakeLength() const;
-	void move(direction dir);
+	void move(Direction dir);
 	bool isFeedEaten() const;
 	void lengthenSnake();
 	char getFieldInfo(int x, int y) const;

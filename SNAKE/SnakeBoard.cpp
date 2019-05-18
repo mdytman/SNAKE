@@ -4,11 +4,12 @@
 
 SnakeBoard::SnakeBoard(int h, int w)
 {
-	winHeight = h;
+	winHeight = h; //need to fix it
 	winWidth = w;
 	height = 10;
 	width = 10;
 	state = RUNNING;
+	direction = RIGHT;
 	for (int i = 0; i < height; ++i)
 	{
 		for (int k = 0; k < width; ++k)
@@ -25,7 +26,27 @@ SnakeBoard::SnakeBoard(int h, int w)
 		board[0][j].isWall = true;
 		board[height - 1][j].isWall = true;
 	}
-	board[height/2][width/2].hasSnakeHead = true;
+	
+	snakePos[0] = { width / 2, height / 2 };
+
+	for (int i3 = 0; i3 < snakePos.size(); ++i3)
+	{
+		for (int i1 = 0; i1 < height; ++i1)
+		{
+			for (int i2 = 0; i2 < width; ++i2)
+			{
+				if (snakePos[0].x == i2 && snakePos[0].y == i1)
+				{
+					board[i1][i2].hasSnakeHead = true;
+				}
+				if (snakePos[i3].x = i2 && snakePos[0].y == i1)
+				{
+					board[i1][i2].hasSnake = true;
+				}
+			}
+
+		}
+	}
 }
 
 void SnakeBoard::debug_display() const
@@ -103,14 +124,40 @@ GameState SnakeBoard::getGameState() const
 
 int SnakeBoard::getSnakeLength() const
 {
-	return snakeLength.size();
+	return snakePos.size();
 }
 
-void SnakeBoard::move(direction dir) //
+void SnakeBoard::move(Direction dir) //
 {
-	if (dir == RIGHT)
+	for (int k = 1; k < snakePos.size(); ++k)
 	{
-
+		for (int i = 0; i < height; ++i)
+		{
+			for (int j = 0; j < width; ++j)
+			{
+				if (snakePos[0].x == j && snakePos[0].y == i)
+				{
+					if (dir == RIGHT)
+					{
+						snakePos[0].x = j + 1;
+					}	
+					if (dir == LEFT)
+					{
+						snakePos[0].x = j - 1;
+					}
+					if (dir == UP)
+					{
+						snakePos[0].y = i - 1;
+					}
+					if (dir == DOWN)
+					{
+						snakePos[0].y = i + 1;
+					}						
+				}
+				snakePos[k].x = snakePos[k + 1].x;
+				snakePos[k].y = snakePos[k + 1].y;
+			}
+		}
 	}
 }
 
@@ -129,11 +176,17 @@ bool SnakeBoard::isFeedEaten() const
 	return false;
 }
 
-void SnakeBoard::lengthenSnake()
+void SnakeBoard::lengthenSnake() //board
 {
 	if (isFeedEaten() == true)
 	{
-		snakeLength.push_back(1);
+		int tmpx = snakePos[snakePos.size() - 1].x;
+		int tmpy = snakePos[snakePos.size() - 1].y;
+		if (direction == RIGHT)
+		{
+
+		}
+
 	}
 }
 
