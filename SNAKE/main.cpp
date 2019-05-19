@@ -8,19 +8,27 @@
 #include "IntroView.h"
 #include "SnakeView.h"
 #include "ScoreView.h"
-
-
+#include "IntroController.h"
+#include "SnakeController.h"
+#include "ScoreController.h"
+#include "GameManager.h"
 
 
 int main()
 {
 	srand(time(NULL));
 	SnakeBoard sb(920, 920);
-	IntroView iv(sb);
-	sb.debug_display();
 
-	SnakeView sv(sb);
-	ScoreView scv(sb);
+	IntroView iv(sb);
+	IntroController ic(iv, sb);
+
+	SnakeView snv(sb);
+	SnakeController snc(snv, sb);
+
+	ScoreView sv(sb);
+	ScoreController sc(sv);
+
+	GameManager gm(ic, snc, sc);
 
 	unsigned int width;
 	unsigned int height;
@@ -41,12 +49,13 @@ int main()
 			if (event.type == sf::Event::Closed)
 				w.close();
 
+			gm.handleEvent(event);
+
 		}
 
 		w.clear();
-		//sv.draw(w);
-		//iv.draw(w);
-		scv.draw(w);
+
+		gm.draw(w);
 
 		w.display();
 	}

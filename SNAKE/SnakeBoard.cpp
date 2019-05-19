@@ -27,10 +27,11 @@ SnakeBoard::SnakeBoard(int windowHeight, int windowWidth)
 		board[height - 1][j].isWall = true;
 	}
 	snakePosition hP = { width / 2, height / 2 }; //head position
-	snakePos.push_back(hP);
+	snakePos.push_back(hP); 
 	//std::cout << snakePos.size() << std::endl;
-	snakePosition sP = { width / 2 - 1, height / 2 };
+	snakePosition sP = { height / 2, width / 2 - 1 };
 	snakePos.push_back(sP);
+	
 	//std::cout << snakePos.size() << std::endl;
 
 	//snakePos[0] = { width / 2, height / 2 };
@@ -47,7 +48,7 @@ SnakeBoard::SnakeBoard(int windowHeight, int windowWidth)
 				}
 				if (i3 > 0)
 				{
-					if (snakePos[i3].x = i2 && snakePos[i3].y == i1)
+					if (snakePos[i3].x == i2 && snakePos[i3].y == i1)
 					{
 						board[i1][i2].hasSnake = true;
 					}
@@ -125,7 +126,6 @@ GameState SnakeBoard::getGameState() const
 			{
 				return FINISHED_LOSS;
 			}
-
 		}
 	}
 	return state;
@@ -136,7 +136,7 @@ int SnakeBoard::getSnakeLength() const
 	return snakePos.size() - 2;
 }
 
-void SnakeBoard::move(Direction dir) //
+void SnakeBoard::changeDirection(Direction dir) 
 {
 	for (int k = 1; k < snakePos.size(); ++k)
 	{
@@ -146,25 +146,79 @@ void SnakeBoard::move(Direction dir) //
 			{
 				if (snakePos[0].x == j && snakePos[0].y == i)
 				{
-					if (dir == RIGHT)
+					if (dir == RIGHT && direction != LEFT)
 					{
+						board[snakePos[0].x][snakePos[0].y].hasSnakeHead = false;
 						snakePos[0].x = j + 1;
+						direction = RIGHT;
 					}	
-					if (dir == LEFT)
+					if (dir == LEFT && direction != RIGHT)
 					{
+						board[snakePos[0].x][snakePos[0].y].hasSnakeHead = false;
 						snakePos[0].x = j - 1;
+						direction = LEFT;
 					}
-					if (dir == UP)
+					if (dir == UP && direction != DOWN)
 					{
+						board[snakePos[0].x][snakePos[0].y].hasSnakeHead = false;
 						snakePos[0].y = i - 1;
+						direction = UP;
 					}
-					if (dir == DOWN)
+					if (dir == DOWN && direction != UP)
 					{
+						board[snakePos[0].x][snakePos[0].y].hasSnakeHead = false;
 						snakePos[0].y = i + 1;
-					}						
+						direction = DOWN;
+					}
+					board[snakePos[0].x][snakePos[0].y].hasSnakeHead = true;
 				}
-				snakePos[k].x = snakePos[k + 1].x;
-				snakePos[k].y = snakePos[k + 1].y;
+				board[snakePos[k].x][snakePos[k].y].hasSnake = false;
+				snakePos[k].x = snakePos[k - 1].x;
+				snakePos[k].y = snakePos[k - 1].y;
+				board[snakePos[k].x][snakePos[k].y].hasSnake = true;
+			}
+		}
+	}
+}
+
+void SnakeBoard::move()
+{
+	for (int k = 1; k < snakePos.size(); ++k)
+	{
+		for (int i = 0; i < height; ++i)
+		{
+			for (int j = 0; j < width; ++j)
+			{
+				board[snakePos[0].x][snakePos[0].y].hasSnakeHead = false;
+				if (snakePos[0].x == j && snakePos[0].y == i)
+				{
+					if (direction == RIGHT)
+						snakePos[0].x = j + 1;
+					if (direction == LEFT)
+						snakePos[0].x = j - 1;
+					if (direction == UP)
+						snakePos[0].y = i + 1;
+					if (direction == DOWN)
+						snakePos[0].y = i - 1;
+				}
+				board[snakePos[0].x][snakePos[0].y].hasSnakeHead = true;
+
+				board[snakePos[k].x][snakePos[k].y].hasSnake = false;
+				snakePos[k].x = snakePos[k-1].x;
+				snakePos[k].y = snakePos[k-1].y;					
+				board[snakePos[k].x][snakePos[k].y].hasSnake = true;
+
+			/*	if (board[i][j].hasSnakeHead == true)
+				{
+					board[i][j].hasSnakeHead = false;
+					board[i][j + 1].hasSnakeHead = true;
+				}
+				if (board[i][j].hasSnake == true)
+				{
+					board[i][j].hasSnake = false;
+					board[i][j + 1].hasSnake = true;
+				} */
+				
 			}
 		}
 	}
@@ -189,37 +243,31 @@ void SnakeBoard::lengthenSnake() //board
 {
 	if (isFeedEaten() == true)
 	{
-		for (int i = 0; i < height; ++i)
-		{
-			for (int j = 0; j < width; ++j)
-			{
-				if (true)
-				{
-
-				}
-			}
-		}
 		int tmpx = snakePos[snakePos.size() - 1].x;
 		int tmpy = snakePos[snakePos.size() - 1].y;
 		if (snakePos[snakePos.size() - 2].x == tmpx - 1 && snakePos[snakePos.size() - 2].y == tmpy)
 		{
 			snakePosition sP = { tmpx + 1, tmpy };
 			snakePos.push_back(sP);
+			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
 		}
 		if (snakePos[snakePos.size() - 2].x == tmpx + 1 && snakePos[snakePos.size() - 2].y == tmpy)
 		{
 			snakePosition sP = { tmpx - 1, tmpy };
 			snakePos.push_back(sP);
+			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
 		}
 		if (snakePos[snakePos.size() - 2].x == tmpx && snakePos[snakePos.size() - 2].y == tmpy - 1)
 		{
 			snakePosition sP = { tmpx, tmpy + 1 };
 			snakePos.push_back(sP);
+			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
 		}
 		if (snakePos[snakePos.size() - 2].x == tmpx && snakePos[snakePos.size() - 2].y == tmpy + 1)
 		{
 			snakePosition sP = { tmpx, tmpy - 1 };
 			snakePos.push_back(sP);
+			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
 		}
 		
 		//changing feed position

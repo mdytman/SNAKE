@@ -15,6 +15,9 @@ SnakeView::SnakeView(SnakeBoard & b) : board(b)
 	snake.setSize(sf::Vector2f(board.getWindowWidth() / board.getBoardWidth(), board.getWindowHeight() / board.getBoardHeight())); 
 	snake.setFillColor(sf::Color(48, 86, 48));
 
+	snakeHead.setSize(sf::Vector2f(board.getWindowWidth() / board.getBoardWidth(), board.getWindowHeight() / board.getBoardHeight()));
+	snakeHead.setFillColor(sf::Color::Blue);
+
 	feed.setSize(sf::Vector2f(board.getWindowWidth() / board.getBoardWidth(), board.getWindowHeight() / board.getBoardHeight()));
 	feed.setFillColor(sf::Color::Red);	
 
@@ -60,6 +63,11 @@ void SnakeView::draw(sf::RenderWindow & w)
 			{
 				wall.setPosition(sf::Vector2f(j*(board.getWindowWidth() / board.getBoardWidth()), i*(board.getWindowHeight() / board.getBoardHeight())));
 				w.draw(wall);
+			}
+			if (board.getFieldInfo(i, j) == 'H')
+			{
+				snakeHead.setPosition(sf::Vector2f(j*(board.getWindowWidth() / board.getBoardWidth()), i*(board.getWindowHeight() / board.getBoardHeight())));
+				w.draw(snakeHead);
 			}
 		}
 	}

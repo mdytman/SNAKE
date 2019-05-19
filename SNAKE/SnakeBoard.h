@@ -44,7 +44,8 @@ public:
 	bool hasFeed(int x, int y) const;
 	GameState getGameState() const;
 	int getSnakeLength() const;
-	void move(Direction dir);
+	void changeDirection(Direction dir);
+	void move();
 	bool isFeedEaten() const;
 	void lengthenSnake();
 	char getFieldInfo(int x, int y) const;
