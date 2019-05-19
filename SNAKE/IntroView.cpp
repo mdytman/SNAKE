@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "IntroView.h"
+#include "IntroView.h" 
 #include <iostream>
 
 IntroView::IntroView(SnakeBoard & sb) : board(sb)
 {
-	background.setSize(sf::Vector2f(board.getBoardHeight(), board.getBoardWidth()));
+	background.setSize(sf::Vector2f(board.getWindowHeight(), board.getWindowWidth()));
 	background.setFillColor(sf::Color(78, 56, 56));
 	
 	
@@ -15,16 +15,16 @@ IntroView::IntroView(SnakeBoard & sb) : board(sb)
 	}
 
 	text1.setFont(font1);
-	text1.setCharacterSize(board.getBoardHeight() / 4);
-	int posW = board.getBoardWidth() / 8;
-	int posH = board.getBoardHeight() / 5;
+	text1.setCharacterSize(board.getWindowHeight() / 4);
+	int posW = board.getWindowWidth() / 8;
+	int posH = board.getWindowHeight() / 5;
 	text1.setPosition(posW, posH);
 	text1.setString("Snake");
 	text1.setFillColor(sf::Color(48, 86, 48));
 
-	playButton.setSize(sf::Vector2f(board.getBoardWidth() / 3, board.getBoardHeight() / 12));
-	int PosW = board.getBoardWidth() / 3;
-	int PosH = board.getBoardHeight() - board.getBoardHeight() / 4;
+	playButton.setSize(sf::Vector2f(board.getWindowWidth() / 3, board.getWindowHeight() / 12));
+	int PosW = board.getWindowWidth() / 3;
+	int PosH = board.getWindowHeight() - board.getWindowHeight() / 4;
 	playButton.setPosition(PosW, PosH);
 	playButton.setFillColor(sf::Color(48, 86, 48));
 
@@ -35,16 +35,16 @@ IntroView::IntroView(SnakeBoard & sb) : board(sb)
 	}
 
 	text2.setFont(font2);
-	text2.setCharacterSize(board.getBoardHeight()/50);
+	text2.setCharacterSize(board.getWindowHeight()/50);
 	text2.setString("Dytman Marta, 249046");
 	text2.setFillColor(sf::Color::White);
-	text2.setPosition(board.getBoardWidth()/2, board.getBoardHeight()/2);
+	text2.setPosition(board.getWindowWidth()/2, board.getWindowHeight()/2);
 
 	text3.setFont(font2);
-	text3.setCharacterSize(board.getBoardHeight()/30);
+	text3.setCharacterSize(board.getWindowHeight()/30);
 	text3.setString("PLAY");
 	text3.setFillColor(sf::Color::White);
-	text3.setPosition(board.getBoardWidth()/2.3, board.getBoardHeight() - board.getBoardHeight()/4.3);
+	text3.setPosition(board.getWindowWidth()/2.3, board.getWindowHeight() - board.getWindowHeight()/4.3);
 
 }
 

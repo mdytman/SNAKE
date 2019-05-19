@@ -6,7 +6,8 @@
 #include <SFML/Window.hpp>
 #include "SnakeBoard.h"
 #include "IntroView.h"
-
+#include "SnakeView.h"
+#include "ScoreView.h"
 
 
 
@@ -14,15 +15,18 @@
 int main()
 {
 	srand(time(NULL));
-	SnakeBoard sb(900, 900);
+	SnakeBoard sb(920, 920);
 	IntroView iv(sb);
 	sb.debug_display();
+
+	SnakeView sv(sb);
+	ScoreView scv(sb);
 
 	unsigned int width;
 	unsigned int height;
 
-	width = (unsigned)sb.getBoardWidth();
-	height = (unsigned)sb.getBoardHeight();
+	width = (unsigned)sb.getWindowWidth();
+	height = (unsigned)sb.getWindowHeight();
 
 	sf::RenderWindow w{ sf::VideoMode{width, height}, "SNAKE" };
 
@@ -40,8 +44,9 @@ int main()
 		}
 
 		w.clear();
-		//sb.draw(w);
-		iv.draw(w);
+		//sv.draw(w);
+		//iv.draw(w);
+		scv.draw(w);
 
 		w.display();
 	}

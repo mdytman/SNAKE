@@ -2,12 +2,12 @@
 #include "SnakeBoard.h"
 
 
-SnakeBoard::SnakeBoard(int h, int w)
+SnakeBoard::SnakeBoard(int windowHeight, int windowWidth)
 {
-	winHeight = h; //need to fix it
-	winWidth = w;
-	height = winHeight / 30;
-	width = winWidth / 30;
+	winHeight = windowHeight; //need to fix it
+	winWidth = windowWidth;
+	height = winHeight / 40;
+	width = winWidth / 40;
 	state = RUNNING;
 	direction = RIGHT;
 	for (int i = 0; i < height; ++i)
@@ -85,7 +85,7 @@ void SnakeBoard::setFeed()
 
 bool SnakeBoard::hasSnake(int x, int y) const
 {
-	if (board[y][x].hasSnake == true)
+	if (board[y][x].hasSnake == true && board[y][x].isWall == false)
 		return true;
 	else
 		return false;
@@ -133,7 +133,7 @@ GameState SnakeBoard::getGameState() const
 
 int SnakeBoard::getSnakeLength() const
 {
-	return snakePos.size();
+	return snakePos.size() - 2;
 }
 
 void SnakeBoard::move(Direction dir) //

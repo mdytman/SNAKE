@@ -32,12 +32,12 @@ class SnakeBoard
 
 	void setFeed();
 public:
-	SnakeBoard(int h, int w);
+	SnakeBoard(int windowHeight, int windowWidth);
 	void debug_display() const;
-	int getBoardHeight() const { return winHeight; }
-	int getBoardWidth() const { return winWidth; }
-	int getHeight() const { return height; }
-	int getWidth() const { return width; }
+	int getWindowHeight() const { return winHeight; }
+	int getWindowWidth() const { return winWidth; }
+	int getBoardHeight() const { return height; }
+	int getBoardWidth() const { return width; }
 	bool hasSnake(int x, int y) const;
 	bool isWall(int x, int y) const;
 	bool hasSnakeHead(int x, int y) const;

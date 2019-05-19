@@ -1,16 +1,18 @@
 #pragma once
-#include "IntroView.h"
+#include <SFML/Graphics.hpp>
+#include "SnakeView.h"
 #include "SnakeBoard.h"
 
-class IntroController
-{
+class SnakeController {
+
 	bool finished = false;
-	IntroView & view;
+	SnakeView & view;
 	SnakeBoard & board;
+
 public:
-	IntroController(IntroView & v, SnakeBoard & b);
+	explicit SnakeController(SnakeView & v, SnakeBoard & b);
+public:
 	void handleEvent(sf::Event &event);
 	void draw(sf::RenderWindow & win) { view.draw(win); }
 	bool isFinished() const { return finished; }
 };
-
