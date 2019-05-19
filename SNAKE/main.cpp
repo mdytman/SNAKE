@@ -1,5 +1,7 @@
 #include "pch.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "SnakeBoard.h"
@@ -11,6 +13,7 @@
 
 int main()
 {
+	srand(time(NULL));
 	SnakeBoard sb(900, 900);
 	IntroView iv(sb);
 	sb.debug_display();

@@ -29,10 +29,11 @@ class SnakeBoard
 	GameState state;
 	Direction direction;
 	std::vector <snakePosition> snakePos;
+
+	void setFeed();
 public:
 	SnakeBoard(int h, int w);
 	void debug_display() const;
-	void setFeed();
 	int getBoardHeight() const { return winHeight; }
 	int getBoardWidth() const { return winWidth; }
 	int getHeight() const { return height; }
