@@ -185,42 +185,23 @@ void SnakeBoard::move()
 {
 	for (int k = 1; k < snakePos.size(); ++k)
 	{
-		for (int i = 0; i < height; ++i)
-		{
-			for (int j = 0; j < width; ++j)
-			{
-				board[snakePos[0].x][snakePos[0].y].hasSnakeHead = false;
-				if (snakePos[0].x == j && snakePos[0].y == i)
-				{
-					if (direction == RIGHT)
-						snakePos[0].x = j + 1;
-					if (direction == LEFT)
-						snakePos[0].x = j - 1;
-					if (direction == UP)
-						snakePos[0].y = i + 1;
-					if (direction == DOWN)
-						snakePos[0].y = i - 1;
-				}
-				board[snakePos[0].x][snakePos[0].y].hasSnakeHead = true;
+		board[snakePos[0].y][snakePos[0].x].hasSnakeHead = false;
+		
+		if (direction == RIGHT)
+			snakePos[0].x = snakePos[0].x + 1;
+		if (direction == LEFT)
+			snakePos[0].x = snakePos[0].x - 1;
+		if (direction == UP)
+			snakePos[0].y = snakePos[0].y - 1;
+		if (direction == DOWN)
+			snakePos[0].y = snakePos[0].y + 1;
+									
+		board[snakePos[0].y][snakePos[0].x].hasSnakeHead = true;
 
-				board[snakePos[k].x][snakePos[k].y].hasSnake = false;
-				snakePos[k].x = snakePos[k-1].x;
-				snakePos[k].y = snakePos[k-1].y;					
-				board[snakePos[k].x][snakePos[k].y].hasSnake = true;
-
-			/*	if (board[i][j].hasSnakeHead == true)
-				{
-					board[i][j].hasSnakeHead = false;
-					board[i][j + 1].hasSnakeHead = true;
-				}
-				if (board[i][j].hasSnake == true)
-				{
-					board[i][j].hasSnake = false;
-					board[i][j + 1].hasSnake = true;
-				} */
-				
-			}
-		}
+		board[snakePos[k].y][snakePos[k].x].hasSnake = false;
+		snakePos[k].x = snakePos[k-1].x;
+		snakePos[k].y = snakePos[k-1].y;					
+		board[snakePos[k].y][snakePos[k].x].hasSnake = true;		
 	}
 }
 
