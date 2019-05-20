@@ -39,7 +39,7 @@ void ScoreView::draw(sf::RenderWindow & win)
 	gameOver.setCharacterSize(board.getWindowHeight() / 5);
 	win.draw(gameOver);
 
-	scoreText.setString("Your score:" + std::to_string(board.getSnakeLength()));
+	scoreText.setString("Your score: " + std::to_string(board.getSnakeLength()));
 	scoreText.setPosition(board.getWindowWidth() / 2.5, board.getWindowHeight() / 1.5);
 	win.draw(scoreText);
 

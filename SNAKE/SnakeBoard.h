@@ -41,7 +41,7 @@ public:
 	bool hasSnake(int x, int y) const;
 	bool isWall(int x, int y) const;
 	bool hasFeed(int x, int y) const;
-	bool isCollision() const;
+	bool isCollision(int x, int y) const;
 	GameState getGameState() const;
 	int getSnakeLength() const;
 	void changeDirection(Direction dir);

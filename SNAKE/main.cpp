@@ -48,9 +48,9 @@ int main()
 
 			if (event.type == sf::Event::Closed)
 				w.close();			
-
+			gm.handleEvent(event);
 		}
-		gm.handleEvent(event);
+		
 
 		w.clear();
 

@@ -90,9 +90,17 @@ bool SnakeBoard::hasFeed(int x, int y) const
 		return false;
 }
 
-bool SnakeBoard::isCollision() const
+bool SnakeBoard::isCollision(int x, int y) const
 {
-	if (board[snakePos[0].y][snakePos[0].x].isWall)
+	if (board[y][x].isWall) return true;
+	for (int i = 0; i < snakePos.size(); ++i)
+	{
+		if (snakePos[i].x == x && snakePos[i].y == y)
+		{
+			return true;
+		}
+	}
+/*	if (board[snakePos[0].y][snakePos[0].x].isWall)
 		return true;
 	for (int i = 1; i < snakePos.size(); ++i)
 	{
@@ -100,17 +108,13 @@ bool SnakeBoard::isCollision() const
 		{
 			return true;
 		}
-	}
+	} */
 	return false;
 }
 
 GameState SnakeBoard::getGameState() const
 {
-	if (isCollision() == true)
-	{
-		return FINISHED_LOSS;
-	}
-	return RUNNING;
+	return state;
 }
 
 int SnakeBoard::getSnakeLength() const
@@ -162,7 +166,7 @@ void SnakeBoard::move()
 		newPos.y = snakePos[0].y + 1;
 	}
 	
-	if (isCollision() == false)
+	if (isCollision(newPos.x, newPos.y) == false)
 	{
 		if (isFeedEaten())
 		{
@@ -178,6 +182,7 @@ void SnakeBoard::move()
 			snakePos.pop_back();
 		}
 	}
+	else state = FINISHED_LOSS;
 }
 
 bool SnakeBoard::isFeedEaten()

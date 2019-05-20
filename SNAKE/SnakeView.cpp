@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SnakeView.h"
+#include <Windows.h>
 
 
 SnakeView::SnakeView(SnakeBoard & b) : board(b)
@@ -29,7 +30,6 @@ SnakeView::SnakeView(SnakeBoard & b) : board(b)
 
 	scoreText.setFont(font);
 	scoreText.setCharacterSize(board.getWindowHeight() / 50);
-	scoreText.setString("Score:" + std::to_string(board.getSnakeLength()));
 	scoreText.setFillColor(sf::Color::Black);
 	scoreText.setPosition(board.getWindowWidth() / 2.3, 0);
 
@@ -44,6 +44,7 @@ SnakeView::SnakeView(SnakeBoard & b) : board(b)
 
 void SnakeView::draw(sf::RenderWindow & w)
 {
+	board.move();
 	w.draw(background);
 	for (int i = 0; i < board.getBoardHeight(); ++i)
 	{
@@ -67,11 +68,13 @@ void SnakeView::draw(sf::RenderWindow & w)
 			
 		}
 	}
+	scoreText.setString("Score:" + std::to_string(board.getSnakeLength()));
 	w.draw(scoreText);
 
 	if (board.getGameState() != RUNNING)
 	{
 		w.draw(spaceText);
 	}
+	Sleep(150);
 }
 

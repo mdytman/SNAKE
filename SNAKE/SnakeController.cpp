@@ -29,7 +29,7 @@ void SnakeController::handleEvent(sf::Event & event)
 		}
 	}
 	
-	board.move();
+	
 
 	if (board.getGameState() == FINISHED_LOSS)
 	{
@@ -41,5 +41,4 @@ void SnakeController::handleEvent(sf::Event & event)
 			}
 		}
 	}
-	Sleep(150);
 }
