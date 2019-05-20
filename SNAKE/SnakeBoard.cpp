@@ -168,6 +168,7 @@ void SnakeBoard::move()
 		{
 			board[newPos.y][newPos.x].hasSnake = true;
 			snakePos.insert(snakePos.begin(), newPos);
+			setFeed();
 		}
 		else
 		{
@@ -179,16 +180,14 @@ void SnakeBoard::move()
 	}
 }
 
-bool SnakeBoard::isFeedEaten() const
+bool SnakeBoard::isFeedEaten()
 {
-	for (int i = 0; i < height; ++i)
+	for (int i = 0; i < snakePos.size(); ++i)
 	{
-		for (int j = 0; j < width; ++j)
+		if (board[snakePos[0].y][snakePos[0].x].hasFeed == true)
 		{
-			if (board[i][j].hasSnakeHead == true && board[i][j].hasFeed == true)
-			{			
-				return true;
-			}
+			board[snakePos[0].y][snakePos[0].x].hasFeed = false;
+			return true;
 		}
 	}
 	return false;

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "SnakeView.h"
-#include <Windows.h>
 
 
 SnakeView::SnakeView(SnakeBoard & b) : board(b)
@@ -45,8 +44,6 @@ SnakeView::SnakeView(SnakeBoard & b) : board(b)
 
 void SnakeView::draw(sf::RenderWindow & w)
 {
-	Sleep(150);
-
 	w.draw(background);
 	for (int i = 0; i < board.getBoardHeight(); ++i)
 	{

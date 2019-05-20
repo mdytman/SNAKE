@@ -46,7 +46,7 @@ public:
 	int getSnakeLength() const;
 	void changeDirection(Direction dir);
 	void move();
-	bool isFeedEaten() const;
+	bool isFeedEaten();
 	void lengthenSnake();
 	char getFieldInfo(int x, int y) const;
 };
