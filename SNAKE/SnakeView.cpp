@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SnakeView.h"
+#include <Windows.h>
 
 
 SnakeView::SnakeView(SnakeBoard & b) : board(b)
@@ -44,31 +45,29 @@ SnakeView::SnakeView(SnakeBoard & b) : board(b)
 
 void SnakeView::draw(sf::RenderWindow & w)
 {
+	Sleep(150);
+
 	w.draw(background);
 	for (int i = 0; i < board.getBoardHeight(); ++i)
 	{
 		for (int j = 0; j < board.getBoardWidth(); ++j)
 		{
-			if (board.getFieldInfo(i, j) == 'S')
+			if (board.getFieldInfo(j, i) == 'S')
 			{
 				snake.setPosition(sf::Vector2f(j*(board.getWindowWidth() / board.getBoardWidth()), i*(board.getWindowHeight() / board.getBoardHeight())));
 				w.draw(snake);
 			}
-			if (board.getFieldInfo(i, j) == 'F')
+			if (board.getFieldInfo(j, i) == 'F')
 			{
 				feed.setPosition(sf::Vector2f(j*(board.getWindowWidth() / board.getBoardWidth()), i*(board.getWindowHeight() / board.getBoardHeight())));
 				w.draw(feed);
 			}
-			if (board.getFieldInfo(i, j) == 'W')
+			if (board.getFieldInfo(j, i) == 'W')
 			{
 				wall.setPosition(sf::Vector2f(j*(board.getWindowWidth() / board.getBoardWidth()), i*(board.getWindowHeight() / board.getBoardHeight())));
 				w.draw(wall);
 			}
-			if (board.getFieldInfo(i, j) == 'H')
-			{
-				snakeHead.setPosition(sf::Vector2f(j*(board.getWindowWidth() / board.getBoardWidth()), i*(board.getWindowHeight() / board.getBoardHeight())));
-				w.draw(snakeHead);
-			}
+			
 		}
 	}
 	w.draw(scoreText);

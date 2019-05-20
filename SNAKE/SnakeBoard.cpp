@@ -4,7 +4,7 @@
 
 SnakeBoard::SnakeBoard(int windowHeight, int windowWidth)
 {
-	winHeight = windowHeight; //need to fix it
+	winHeight = windowHeight; 
 	winWidth = windowWidth;
 	height = winHeight / 40;
 	width = winWidth / 40;
@@ -29,20 +29,13 @@ SnakeBoard::SnakeBoard(int windowHeight, int windowWidth)
 	snakePosition hP = { width / 2, height / 2 }; //head position
 	snakePos.push_back(hP); 
 
-	snakePosition sP = { height / 2, width / 2 - 1 };
+	snakePosition sP = { width / 2, height / 2 - 1 };
 	snakePos.push_back(sP);
 	
 
 	for (int i3 = 0; i3 < snakePos.size(); ++i3)
 	{
-		if (i3 == 0)
-		{
-			board[snakePos[0].y][snakePos[0].x].hasSnakeHead = true;
-		}
-		if (i3 > 0)
-		{
-			board[snakePos[i3].y][snakePos[i3].x].hasSnake = true;
-		}				
+		board[snakePos[i3].y][snakePos[i3].x].hasSnake = true;
 	}
 	setFeed();
 }
@@ -88,13 +81,6 @@ bool SnakeBoard::isWall(int x, int y) const
 		return false;
 }
 
-bool SnakeBoard::hasSnakeHead(int x, int y) const
-{
-	if (board[y][x].hasSnakeHead == true)
-		return true;
-	else
-		return false;
-}
 
 bool SnakeBoard::hasFeed(int x, int y) const
 {
@@ -104,19 +90,27 @@ bool SnakeBoard::hasFeed(int x, int y) const
 		return false;
 }
 
-GameState SnakeBoard::getGameState() const
+bool SnakeBoard::isCollision() const
 {
-	for (int i = 0; i < height; ++i)
+	if (board[snakePos[0].y][snakePos[0].x].isWall)
+		return true;
+	for (int i = 1; i < snakePos.size(); ++i)
 	{
-		for (int j = 0; j < width; ++j)
+		if (snakePos[0].y == snakePos[i].y && snakePos[0].x == snakePos[i].x)
 		{
-			if ((board[i][j].hasSnakeHead == true && board[i][j].isWall == true) || (board[i][j].hasSnakeHead == true && board[i][j].hasSnake == true))
-			{
-				return FINISHED_LOSS;
-			}
+			return true;
 		}
 	}
-	return state;
+	return false;
+}
+
+GameState SnakeBoard::getGameState() const
+{
+	if (isCollision() == true)
+	{
+		return FINISHED_LOSS;
+	}
+	return RUNNING;
 }
 
 int SnakeBoard::getSnakeLength() const
@@ -126,59 +120,62 @@ int SnakeBoard::getSnakeLength() const
 
 void SnakeBoard::changeDirection(Direction dir) 
 {
-	for (int k = 1; k < snakePos.size(); ++k)
+	if (dir == RIGHT && direction != LEFT)
 	{
-		board[snakePos[0].y][snakePos[0].x].hasSnakeHead = false;
-		if (dir == RIGHT && direction != LEFT)
-		{	
-			snakePos[0].x = snakePos[0].x + 1;
-			direction = RIGHT;
-		}
-		if (dir == LEFT && direction != RIGHT)
-		{
-			snakePos[0].x = snakePos[0].x - 1;
-			direction = LEFT;
-		}
-		if (dir == UP && direction != DOWN)
-		{
-			snakePos[0].y = snakePos[0].y - 1;
-			direction = UP;
-		}
-		if (dir == DOWN && direction != UP)
-		{
-			snakePos[0].y = snakePos[0].y + 1;
-			direction = DOWN;
-		}
-		board[snakePos[0].x][snakePos[0].y].hasSnakeHead = true;			
-				
-		board[snakePos[k].y][snakePos[k].x].hasSnake = false;
-		snakePos[k].x = snakePos[k - 1].x;
-		snakePos[k].y = snakePos[k - 1].y;
-		board[snakePos[k].y][snakePos[k].x].hasSnake = true;
+		direction = RIGHT;
+	}
+	if (dir == LEFT && direction != RIGHT)
+	{
+		direction = LEFT;
+	}
+	if (dir == UP && direction != DOWN)
+	{
+		direction = UP;
+	}
+	if (dir == DOWN && direction != UP)
+	{
+		direction = DOWN;
 	}
 }
 
 void SnakeBoard::move()
 {
-	for (int k = 1; k < snakePos.size(); ++k)
+	snakePosition newPos;
+	if (direction == RIGHT)
 	{
-		board[snakePos[0].y][snakePos[0].x].hasSnakeHead = false;
-		
-		if (direction == RIGHT)
-			snakePos[0].x = snakePos[0].x + 1;
-		if (direction == LEFT)
-			snakePos[0].x = snakePos[0].x - 1;
-		if (direction == UP)
-			snakePos[0].y = snakePos[0].y - 1;
-		if (direction == DOWN)
-			snakePos[0].y = snakePos[0].y + 1;
-									
-		board[snakePos[0].y][snakePos[0].x].hasSnakeHead = true;
-
-		board[snakePos[k].y][snakePos[k].x].hasSnake = false;
-		snakePos[k].x = snakePos[k-1].x;
-		snakePos[k].y = snakePos[k-1].y;					
-		board[snakePos[k].y][snakePos[k].x].hasSnake = true;		
+		newPos.x = snakePos[0].x + 1;
+		newPos.y = snakePos[0].y;
+	}
+	if (direction == LEFT)
+	{
+		newPos.x = snakePos[0].x - 1;
+		newPos.y = snakePos[0].y;
+	}
+	if (direction == UP)
+	{
+		newPos.x = snakePos[0].x;
+		newPos.y = snakePos[0].y - 1;
+	}
+	if (direction == DOWN)
+	{
+		newPos.x = snakePos[0].x;
+		newPos.y = snakePos[0].y + 1;
+	}
+	
+	if (isCollision() == false)
+	{
+		if (isFeedEaten())
+		{
+			board[newPos.y][newPos.x].hasSnake = true;
+			snakePos.insert(snakePos.begin(), newPos);
+		}
+		else
+		{
+			board[newPos.y][newPos.x].hasSnake = true;
+			snakePos.insert(snakePos.begin(), newPos);
+			board[snakePos[snakePos.size() - 1].y][snakePos[snakePos.size() - 1].x].hasSnake = false;
+			snakePos.pop_back();
+		}
 	}
 }
 
@@ -250,8 +247,6 @@ char SnakeBoard::getFieldInfo(int x, int y) const
 		return 'F';
 	if (board[y][x].hasSnake == true)
 		return 'S';
-	if (board[y][x].hasSnakeHead == true)
-		return 'H';
 	if (board[y][x].isWall == true)
 		return 'W';
 	else return '_';

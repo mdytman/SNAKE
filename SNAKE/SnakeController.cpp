@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SnakeController.h"
+#include <Windows.h>
 
 
 SnakeController::SnakeController(SnakeView & v, SnakeBoard & b) : view(v), board(b)
@@ -8,7 +9,6 @@ SnakeController::SnakeController(SnakeView & v, SnakeBoard & b) : view(v), board
 
 void SnakeController::handleEvent(sf::Event & event)
 {
-
 	if (event.type == sf::Event::KeyPressed)
 	{
 		if (event.key.code == sf::Keyboard::Right)
@@ -28,10 +28,11 @@ void SnakeController::handleEvent(sf::Event & event)
 			board.changeDirection(DOWN);
 		}
 	}
-	board.move();
-	board.lengthenSnake();
+	
 
-	if (board.getGameState() != RUNNING)
+	board.move();
+
+	if (board.getGameState() == FINISHED_LOSS)
 	{
 		if (event.type == sf::Event::KeyPressed)
 		{

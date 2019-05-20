@@ -40,8 +40,8 @@ public:
 	int getBoardWidth() const { return width; }
 	bool hasSnake(int x, int y) const;
 	bool isWall(int x, int y) const;
-	bool hasSnakeHead(int x, int y) const;
 	bool hasFeed(int x, int y) const;
+	bool isCollision() const;
 	GameState getGameState() const;
 	int getSnakeLength() const;
 	void changeDirection(Direction dir);

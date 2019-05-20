@@ -47,11 +47,10 @@ int main()
 		while (w.pollEvent(event)) {
 
 			if (event.type == sf::Event::Closed)
-				w.close();
-
-			gm.handleEvent(event);
+				w.close();			
 
 		}
+		gm.handleEvent(event);
 
 		w.clear();
 
