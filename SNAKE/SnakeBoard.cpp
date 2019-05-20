@@ -60,7 +60,7 @@ void SnakeBoard::setFeed()
 	{
 		x = rand() % height;
 		y = rand() % width;
-	} while (board[x][y].hasSnake == true || board[x][y].isWall == true || board[x][y].hasSnakeHead == true);
+	} while (board[x][y].hasSnake == true || board[x][y].isWall == true);
 	board[x][y].hasFeed = true;
 }
 
@@ -100,15 +100,6 @@ bool SnakeBoard::isCollision(int x, int y) const
 			return true;
 		}
 	}
-/*	if (board[snakePos[0].y][snakePos[0].x].isWall)
-		return true;
-	for (int i = 1; i < snakePos.size(); ++i)
-	{
-		if (snakePos[0].y == snakePos[i].y && snakePos[0].x == snakePos[i].x)
-		{
-			return true;
-		}
-	} */
 	return false;
 }
 
@@ -170,8 +161,9 @@ void SnakeBoard::move()
 	{
 		if (isFeedEaten())
 		{
-			board[newPos.y][newPos.x].hasSnake = true;
+			board[newPos.y][newPos.x].hasSnake = true; //snake lengthen
 			snakePos.insert(snakePos.begin(), newPos);
+
 			setFeed();
 		}
 		else
@@ -198,52 +190,6 @@ bool SnakeBoard::isFeedEaten()
 	return false;
 }
 
-void SnakeBoard::lengthenSnake() //board
-{
-	if (isFeedEaten() == true)
-	{
-		int tmpx = snakePos[snakePos.size() - 1].x;
-		int tmpy = snakePos[snakePos.size() - 1].y;
-		if (snakePos[snakePos.size() - 2].x == tmpx - 1 && snakePos[snakePos.size() - 2].y == tmpy)
-		{
-			snakePosition sP = { tmpx + 1, tmpy };
-			snakePos.push_back(sP);
-			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
-		}
-		if (snakePos[snakePos.size() - 2].x == tmpx + 1 && snakePos[snakePos.size() - 2].y == tmpy)
-		{
-			snakePosition sP = { tmpx - 1, tmpy };
-			snakePos.push_back(sP);
-			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
-		}
-		if (snakePos[snakePos.size() - 2].x == tmpx && snakePos[snakePos.size() - 2].y == tmpy - 1)
-		{
-			snakePosition sP = { tmpx, tmpy + 1 };
-			snakePos.push_back(sP);
-			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
-		}
-		if (snakePos[snakePos.size() - 2].x == tmpx && snakePos[snakePos.size() - 2].y == tmpy + 1)
-		{
-			snakePosition sP = { tmpx, tmpy - 1 };
-			snakePos.push_back(sP);
-			board[snakePos[snakePos.size() - 1].x][snakePos[snakePos.size() - 1].y].hasSnake = true;
-		}
-		
-		//changing feed position
-		for (int i = 0; i < height; ++i)
-		{
-			for (int j = 0; j < width; ++j)
-			{
-				if (board[i][j].hasFeed == true)
-				{
-					board[i][j].hasFeed = false;
-					setFeed();
-					break;
-				}
-			}
-		}
-	}
-}
 
 char SnakeBoard::getFieldInfo(int x, int y) const
 {

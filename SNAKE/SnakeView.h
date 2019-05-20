@@ -9,7 +9,8 @@ class SnakeView
 	sf::RectangleShape background;
 	sf::RectangleShape snake;
 	sf::RectangleShape snakeHead;
-	sf::RectangleShape feed; //change it into a texture
+	sf::RectangleShape feed; 
+	sf::Texture feedTexture;
 	sf::Text scoreText;
 	sf::Font font;
 	sf::Text spaceText;

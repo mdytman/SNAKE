@@ -2,15 +2,14 @@
 #include <iostream>
 #include <vector>
 
-enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
+enum GameState { RUNNING, FINISHED_LOSS };
 enum Direction {RIGHT, LEFT, UP, DOWN};
 
 struct Field
 {
 	bool hasFeed;
 	bool isWall;
-	bool hasSnake; //?
-	bool hasSnakeHead;
+	bool hasSnake;
 };
 
 struct snakePosition
@@ -47,7 +46,6 @@ public:
 	void changeDirection(Direction dir);
 	void move();
 	bool isFeedEaten();
-	void lengthenSnake();
 	char getFieldInfo(int x, int y) const;
 };
 

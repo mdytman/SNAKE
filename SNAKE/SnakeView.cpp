@@ -19,8 +19,14 @@ SnakeView::SnakeView(SnakeBoard & b) : board(b)
 	snakeHead.setSize(sf::Vector2f(board.getWindowWidth() / board.getBoardWidth(), board.getWindowHeight() / board.getBoardHeight()));
 	snakeHead.setFillColor(sf::Color::Blue);
 
-	feed.setSize(sf::Vector2f(board.getWindowWidth() / board.getBoardWidth(), board.getWindowHeight() / board.getBoardHeight()));
-	feed.setFillColor(sf::Color::Red);	
+	if (!feedTexture.loadFromFile("feed.png"))
+	{
+		std::cout << "error" << std::endl;
+		system("pause");
+
+	}
+	feed.setSize(sf::Vector2f(1.2*(board.getWindowWidth() / board.getBoardWidth()), 1.2*(board.getWindowHeight() / board.getBoardHeight())));
+	feed.setTexture(&feedTexture);
 
 	if (!font.loadFromFile("silkscreen.ttf"))
 	{
